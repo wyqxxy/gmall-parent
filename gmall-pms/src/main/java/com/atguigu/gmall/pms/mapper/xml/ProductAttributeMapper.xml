@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.gmall.pms.mapper.ProductAttributeMapper">
+
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        product_attribute_id,id, product_attribute_category_id, name, select_type, input_type, input_list, sort, filter_type, search_type, related_status, hand_add_status, type
+    </sql>
+
+
+    <resultMap id="baseMap" type="com.atguigu.gmall.pms.pmsvo.ProductAttrInfo">
+        <result column="id" property="attributeId"/>
+        <result column="product_attribute_category_id" property="attributeCategoryId"/>
+    </resultMap>
+
+
+   <select id="getListByProductCategoryId" resultMap="baseMap">
+        SELECT pa.id ,pa.product_attribute_category_id
+	       FROM`pms_product_attribute` pa
+	       LEFT  JOIN `pms_product_category_attribute_relation` pcar
+	       ON pcar.product_attribute_id=pa.id
+	  WHERE pcar.product_category_id=#{productCategoryId}
+
+    </select>
+
+
+</mapper>
